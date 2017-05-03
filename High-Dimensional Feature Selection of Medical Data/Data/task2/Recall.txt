@@ -1,0 +1,26 @@
+function [ result ] = Recall( Y_hat, Y)
+%CALCRECALL Summary of this function goes here
+%   Detailed explanation goes here
+
+Y(Y ~= 1) = 0;
+Y_hat(Y_hat ~= 1) = 0;
+
+num_samples = size(Y, 1);
+
+result = 0;
+for i = 1:num_samples
+    Y_i = Y(i, :);
+    Y_hat_i = Y_hat(i, :);
+    
+    result_i = nnz(Y_i & Y_hat_i)/nnz(Y_i);
+    if isnan(result_i)
+        result_i = 0;
+    end
+    
+    result = result + result_i;
+end
+
+result = result/num_samples;
+
+end
+
